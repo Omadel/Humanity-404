@@ -1,0 +1,12 @@
+{
+    "name": "MummyPietree",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "b3431f6d-b5f1-4621-a626-618cabb3d00e",
+            "actions": [],
+            "bindings": []
+        }
+    ],
+    "controlSchemes": []
+}
