@@ -1,3 +1,4 @@
+using QuickOutline;
 using UnityEngine;
 
 namespace MummyPietree
