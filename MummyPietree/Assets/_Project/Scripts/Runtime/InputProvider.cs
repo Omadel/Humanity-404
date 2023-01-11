@@ -41,7 +41,6 @@ namespace MummyPietree
 
         private void HandleMouseRightButton()
         {
-            Debug.Log("Rith");
             float oldMouseState = rightButtonState;
             Mouse mouse = Mouse.current;
             rightButtonState = mouse.rightButton.ReadValue();

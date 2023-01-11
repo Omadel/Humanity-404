@@ -1,17 +1,33 @@
 using UnityEngine;
+using DG.Tweening;
 
 namespace MummyPietree
 {
     public class Door : MonoBehaviour
     {
-        [SerializeField] private Transform redRoom, blueRoom;
+        [SerializeField] private Room redRoom, blueRoom;
+        private Animator animator;
+
+        private void Awake()
+        {
+            animator = GetComponent<Animator>();
+        }
+
+        private bool GoesToBlueRoom()
+        {
+            float angle = Vector3.Angle(transform.right, PlayerController.Instance.Direction);
+            return angle <= 90f;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            bool goesToBlueRoom = GoesToBlueRoom();
+            animator.CrossFade($"Door_Opened{(goesToBlueRoom ? "Blue" : "Red")}", .2f);
+        }
+
         private void OnTriggerExit(Collider other)
         {
-            float angle = Vector3.Angle(transform.right, other.GetComponent<PlayerController>().Direction);
-            Debug.Log(angle);
-            bool goestoBlueRoom = angle <= 90f;
-            Vector3 position = goestoBlueRoom ? blueRoom.position : redRoom.position;
-            Camera.main.transform.parent.position = position;
+            PlayerController.Instance.EnterRoom(GoesToBlueRoom() ? blueRoom : redRoom);
         }
 
 #if UNITY_EDITOR

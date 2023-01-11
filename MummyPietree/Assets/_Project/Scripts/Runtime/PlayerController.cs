@@ -1,25 +1,64 @@
+using DG.Tweening;
 using Etienne;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace MummyPietree
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : Singleton<PlayerController>
     {
         public Vector3 Direction => direction;
+
+        [SerializeField] private Room startingRoom;
+        [SerializeField] private Volume volume;
+        [Header("Change Room Animation")]
+        [SerializeField] private float duration = .25f;
+        [SerializeField] private float vignetteMaxValue = .8f;
+        [Header("Stats")]
+        [SerializeField, Range(0f, 1f)] float mood = .5f;
+        [SerializeField] Gradient moodColor;
+        [SerializeField] MeshRenderer moodRenderer;
 
         private Vector3 direction, position;
         private NavMeshAgent agent;
         private Interactible hoveredInteractible;
+        private Room currentRoom;
+        private Transform cameraRoot;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             InputProvider.Instance.OnLeftMouseButtonPressed += BeginInteraction;
             InputProvider.Instance.OnLeftMouseButtonReleased += Interact;
             InputProvider.Instance.OnRightMouseButtonPressed += MoveTo;
             agent = GetComponent<NavMeshAgent>();
             agent.updateRotation = false;
             agent.updateUpAxis = false;
+        }
+
+        private void Start()
+        {
+            foreach (Room room in FindObjectsOfType<Room>())
+            {
+                room.ExitRoom();
+            }
+            cameraRoot = Camera.main.transform.root;
+            currentRoom = startingRoom;
+            currentRoom.EnterRoom();
+        }
+
+        public void EnterRoom(Room room)
+        {
+            if (room == currentRoom) return;
+            currentRoom?.ExitRoom();
+            currentRoom = room;
+            currentRoom.EnterRoom();
+            cameraRoot.DOMove(currentRoom.transform.position, duration);
+
+            volume.profile.TryGet(out Vignette vignette);
+            DOTween.To(() => vignette.intensity.value, x => vignette.intensity.value = x, vignetteMaxValue, duration * .5f).SetLoops(2, LoopType.Yoyo);
         }
 
         private void BeginInteraction(Vector2 mousePosition)
@@ -53,6 +92,7 @@ namespace MummyPietree
 
         private void Update()
         {
+            moodRenderer.material.color = moodColor.Evaluate(mood);
             ComputeDirection();
 
             if (!IsPointerOverCollider(InputProvider.Instance.MousePosition, out RaycastHit hit)) return;
@@ -92,7 +132,6 @@ namespace MummyPietree
 
             NavMesh.SamplePosition(positionInWorld, out NavMeshHit navHit, 10000, NavMesh.AllAreas);
             agent.SetDestination(navHit.position);
-            //agent.SetDestination(positionInWorld);
         }
 
         private bool IsPointerOverCollider(Vector2 mousePosition, out RaycastHit hit)
