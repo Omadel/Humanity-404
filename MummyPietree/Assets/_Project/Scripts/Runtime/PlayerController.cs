@@ -1,9 +1,11 @@
 using DG.Tweening;
 using Etienne;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 namespace MummyPietree
 {
@@ -17,15 +19,17 @@ namespace MummyPietree
         [SerializeField] private float duration = .25f;
         [SerializeField] private float vignetteMaxValue = .8f;
         [Header("Stats")]
-        [SerializeField, Range(0f, 1f)] float mood = .5f;
-        [SerializeField] Gradient moodColor;
-        [SerializeField] MeshRenderer moodRenderer;
+        [SerializeField] private float stressGainMoving = .1f;
+        [SerializeField, Range(0f, 1f)] private float mood = .5f;
+        [SerializeField] private Gradient moodColor;
+        [SerializeField] private Slider moodBar;
 
         private Vector3 direction, position;
         private NavMeshAgent agent;
         private Interactible hoveredInteractible;
         private Room currentRoom;
         private Transform cameraRoot;
+        Animator animator;
 
         protected override void Awake()
         {
@@ -36,6 +40,7 @@ namespace MummyPietree
             agent = GetComponent<NavMeshAgent>();
             agent.updateRotation = false;
             agent.updateUpAxis = false;
+            animator = GetComponent<Animator>();
         }
 
         private void Start()
@@ -47,6 +52,7 @@ namespace MummyPietree
             cameraRoot = Camera.main.transform.root;
             currentRoom = startingRoom;
             currentRoom.EnterRoom();
+            HandleInteractionStress(0f);
         }
 
         public void EnterRoom(Room room)
@@ -92,7 +98,6 @@ namespace MummyPietree
 
         private void Update()
         {
-            moodRenderer.material.color = moodColor.Evaluate(mood);
             ComputeDirection();
 
             if (!IsPointerOverCollider(InputProvider.Instance.MousePosition, out RaycastHit hit)) return;
@@ -108,7 +113,17 @@ namespace MummyPietree
         {
             Vector3 oldPosition = position;
             position = transform.position;
-            direction = oldPosition.Direction(position).normalized;
+            direction = oldPosition.Direction(position);
+            if (direction != Vector3.zero)
+            {
+                HandleInteractionStress(stressGainMoving * Time.deltaTime);
+                animator.Play("Player_Walk");
+            }
+            else
+            {
+                animator.Play("Player_Idle");
+            }
+            direction.Normalize();
         }
 
         private void MoveTo(Vector2 mousePosition)
@@ -138,6 +153,18 @@ namespace MummyPietree
         {
             Ray ray = Camera.main.ScreenPointToRay(mousePosition);
             return Physics.Raycast(ray, out hit);
+        }
+
+        internal void HandleInteractionStress(float interactionStress)
+        {
+            Debug.Log("HandleStress");
+            mood += interactionStress;
+            mood = Mathf.Clamp01(mood);
+            if (moodBar != null)
+            {
+                moodBar.fillRect.GetComponent<Image>().color = moodColor.Evaluate(mood);
+                moodBar.value = mood;
+            }
         }
     }
 }

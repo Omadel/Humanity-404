@@ -6,6 +6,8 @@ namespace MummyPietree
     [RequireComponent(typeof(Outline))]
     public class Interactible : MonoBehaviour
     {
+        [SerializeField, Range(0f,1f)] float interactionStress = -.1f;
+
         private Outline outline;
         private void Awake()
         {
@@ -39,7 +41,7 @@ namespace MummyPietree
 
         public void Interact()
         {
-            Debug.Log("Interact");
+            PlayerController.Instance.HandleInteractionStress(interactionStress);
         }
     }
 }
