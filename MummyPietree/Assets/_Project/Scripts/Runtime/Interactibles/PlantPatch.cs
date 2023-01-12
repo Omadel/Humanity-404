@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace MummyPietree
 {
-    public class PlantPatch : Interactible
+    public class PlantPatch : Interactable
     {
-        public override bool IsInteractable => !plant.HasSeed;
+        public override bool IsInteractable => !plant.HasSeed && PlayerController.Instance.HasItem && PlayerController.Instance.TransportedItem is SeedSO;
 
-        Plant plant;
+        private Plant plant;
 
         protected override void Start()
         {
@@ -18,8 +14,8 @@ namespace MummyPietree
 
         protected override void OnInteractionEnded()
         {
-            plant.SowPlant();
-            PlayerController.Instance.UseTransportedItem();
+            SeedSO seed = PlayerController.Instance.UseTransportedItem() as SeedSO;
+            plant.SowPlant(seed);
         }
     }
 }

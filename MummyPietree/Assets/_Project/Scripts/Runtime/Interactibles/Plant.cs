@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace MummyPietree
 {
-    public class Plant : Interactible
+    public class Plant : Interactable
     {
         public bool IsHarverstable => isHarverstable;
         public bool HasSeed => hasSeed;
 
-        [SerializeField] private Sprite plant;
+        [SerializeField] private PlantSO plant;
         [SerializeField, MinMaxRange(0f, 5f)] private Range growthRange = new Range(0f, 1f);
         [SerializeField] private float growthDuration = 10f;
         [SerializeField] private bool hasSeed = false;
@@ -22,7 +22,7 @@ namespace MummyPietree
             base.Start();
             if (hasSeed)
             {
-            isHarverstable = true;
+                isHarverstable = true;
             }
             else
             {
@@ -30,8 +30,9 @@ namespace MummyPietree
             }
         }
 
-        public void SowPlant()
+        public void SowPlant(SeedSO seed)
         {
+            plant = seed.GrownPlant;
             hasSeed = true;
             transform.DOScale(growthRange.Max, growthDuration).OnComplete(GrowthCompleted).SetEase(Ease.Linear);
         }

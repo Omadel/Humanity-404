@@ -3,19 +3,15 @@ using UnityEngine;
 
 namespace MummyPietree
 {
-    public class Invertory : Interactible
+    public class Invertory : Interactable
     {
-        public override bool IsInteractable => PlayerController.Instance.TransportsItem;
+        public override bool IsInteractable => PlayerController.Instance.HasItem;
 
-        [SerializeField] private SpriteRenderer[] items;
+        [SerializeField] private Item[] items;
 
         protected override void Start()
         {
             base.Start();
-            foreach (SpriteRenderer item in items)
-            {
-                item.enabled = false;
-            }
         }
 
         public override void Interact()
@@ -26,10 +22,9 @@ namespace MummyPietree
 
         private void UseTransportedItem()
         {
-            Sprite item = PlayerController.Instance.UseTransportedItem();
-            SpriteRenderer emptyItem = items.Where(i => !i.enabled).FirstOrDefault();
-            emptyItem.enabled = item != null;
-            emptyItem.sprite = item;
+            ItemSO item = PlayerController.Instance.UseTransportedItem();
+            Item emptyItem = items.Where(i => !i.HasItem).FirstOrDefault();
+            emptyItem.SetItem(item);
         }
     }
 }

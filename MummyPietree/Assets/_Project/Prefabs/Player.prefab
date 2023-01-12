@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 127675067}
   - component: {fileID: 127675068}
+  - component: {fileID: 554012336696815205}
+  - component: {fileID: 7842623793640286685}
   m_Layer: 0
   m_Name: TransportItem
   m_TagString: Untagged
@@ -40,8 +42,8 @@ SpriteRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 127675066}
   m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
@@ -52,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 53aeb66165bea094c91e96f7f2e7ff73, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,6 +86,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &554012336696815205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127675066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &7842623793640286685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127675066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6bd357fc24fc704d96de33e3eb9002c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionStress: -0.1
+  interactionDuration: 1
+  isInteractabe: 0
+  itemData: {fileID: 0}
 --- !u!1 &188654872
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,8 +438,8 @@ SpriteRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2312198140615887012}
   m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
@@ -414,7 +450,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 53aeb66165bea094c91e96f7f2e7ff73, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -461,7 +497,7 @@ GameObject:
   - component: {fileID: 2312198141267646209}
   - component: {fileID: 1491738330}
   - component: {fileID: 1491738336}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -557,7 +593,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   moodBar: {fileID: 0}
   activityBar: {fileID: 188654876}
-  transportedItem: {fileID: 127675068}
+  transportedItem: {fileID: 7842623793640286685}
 --- !u!65 &2312198141267646210
 BoxCollider:
   m_ObjectHideFlags: 0

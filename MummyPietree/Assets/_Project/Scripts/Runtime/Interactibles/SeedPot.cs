@@ -5,9 +5,11 @@ using UnityEngine;
 
 namespace MummyPietree
 {
-    public class SeedPot : Interactible
+    public class SeedPot : Interactable
     {
-        [SerializeField] Sprite seed;
+        public override bool IsInteractable => !PlayerController.Instance.HasItem;
+
+        [SerializeField] SeedSO seed;
 
         protected override void OnInteractionEnded()
         {

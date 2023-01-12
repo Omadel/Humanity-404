@@ -13,6 +13,7 @@ namespace MummyPietree
     public class PlayerController : Singleton<PlayerController>
     {
         public Vector3 Direction => direction;
+        public ItemSO TransportedItem => transportedItem.ItemSO;
 
         [SerializeField] private Room startingRoom;
         [SerializeField] private Volume volume;
@@ -25,18 +26,19 @@ namespace MummyPietree
         [SerializeField] private Gradient moodColor;
         [SerializeField] private Slider moodBar;
         [SerializeField] private Slider activityBar;
-        [SerializeField] private SpriteRenderer transportedItem;
+        [SerializeField] private Item transportedItem;
 
-        private Vector3 direction, position;
+        private Vector3 direction;
         private NavMeshAgent agent;
-        private Interactible hoveredInteractible, selectedInteractible;
+        private Interactable hoveredInteractible, selectedInteractible;
         private Room currentRoom;
         private Transform cameraRoot;
         private Animator animator;
         private Animator2D animator2D;
         private CanvasGroup overHeadCanvas;
+        private bool isInteracting = false;
 
-        public bool TransportsItem => transportedItem.sprite != null;
+        public bool HasItem => transportedItem.HasItem;
 
         protected override void Awake()
         {
@@ -46,12 +48,11 @@ namespace MummyPietree
             agent = GetComponent<NavMeshAgent>();
             agent.updateRotation = false;
             agent.updateUpAxis = false;
+            agent.Warp(transform.position);
             animator = GetComponent<Animator>();
             animator2D = GetComponent<Animator2D>();
             overHeadCanvas = GetComponentInChildren<CanvasGroup>();
             overHeadCanvas.alpha = 0f;
-            transportedItem.color = Color.clear;
-            transportedItem.sprite = null;
         }
 
         private void Start()
@@ -64,6 +65,8 @@ namespace MummyPietree
             currentRoom = startingRoom;
             currentRoom.EnterRoom();
             HandleInteractionStress(0f);
+
+            Debug.Log(agent.isOnNavMesh);
         }
 
         public void EnterRoom(Room room)
@@ -81,25 +84,25 @@ namespace MummyPietree
         private void BeginInteraction(Vector2 mousePosition)
         {
             if (!IsPointerOverCollider(mousePosition, out RaycastHit hit)) return;
-            if (!hit.collider.TryGetComponent(out Interactible interactible)) return;
+            if (!hit.collider.TryGetComponent(out Interactable interactible) || !interactible.IsInteractable) return;
             UnHoverInteractible();
             interactible.Click();
         }
         private bool TryInteract(Vector2 mousePosition)
         {
             if (!IsPointerOverCollider(mousePosition, out RaycastHit hit)) return false;
-            if (!hit.collider.TryGetComponent(out Interactible interactible))
+            if (!hit.collider.TryGetComponent(out Interactable interactible) || !interactible.IsInteractable)
             {
+                selectedInteractible = null;
                 return false;
             }
             UnHoverInteractible();
             interactible.Release();
             selectedInteractible = interactible;
-            Debug.Log("Select interactible");
             return true;
         }
 
-        private void HoverInteractible(Interactible interactible)
+        private void HoverInteractible(Interactable interactible)
         {
             UnHoverInteractible();
             hoveredInteractible = interactible;
@@ -114,10 +117,11 @@ namespace MummyPietree
 
         private void Update()
         {
+            if (isInteracting) return;
             ComputeDirection();
 
             if (!IsPointerOverCollider(InputProvider.Instance.MousePosition, out RaycastHit hit)) return;
-            if (!hit.collider.TryGetComponent(out Interactible interactible) || !interactible.IsInteractable)
+            if (!hit.collider.TryGetComponent(out Interactable interactible) || !interactible.IsInteractable)
             {
                 UnHoverInteractible();
                 return;
@@ -127,10 +131,8 @@ namespace MummyPietree
 
         private void ComputeDirection()
         {
-            Vector3 oldPosition = position;
-            position = transform.position;
-            direction = oldPosition.Direction(position);
-            if (Vector3.Distance(position, agent.destination) <= .2f)
+            direction = transform.position.Direction(agent.destination);
+            if (Vector3.Distance(transform.position, agent.destination) <= .3f)
             {
                 direction = Vector3.zero;
                 agent.isStopped = true;
@@ -139,7 +141,6 @@ namespace MummyPietree
             {
                 agent.isStopped = false;
             }
-            AnimatorClipInfo[] infos = animator.GetCurrentAnimatorClipInfo(0);
             if (agent.isStopped)
             {
                 if (animator2D.GetState() != "Idle")
@@ -148,7 +149,6 @@ namespace MummyPietree
                     animator.Play("Player_Idle");
                     selectedInteractible?.Interact();
                     selectedInteractible = null;
-                    Debug.Log("Deselect Interactible");
                 }
             }
             else
@@ -160,7 +160,7 @@ namespace MummyPietree
                     animator.Play("Player_Walk");
                 }
                 Vector3 right = transform.GetChild(0).right;
-                animator2D.Renderer.flipX = Vector3.Angle(right, direction) <= 90;
+                animator2D.FlipX(Vector3.Angle(right, direction) <= 90);
             }
             direction.Normalize();
         }
@@ -189,7 +189,12 @@ namespace MummyPietree
             }
 
             NavMesh.SamplePosition(positionInWorld, out NavMeshHit navHit, 10000, NavMesh.AllAreas);
-            agent.SetDestination(navHit.position);
+
+            Vector3 vector3 = navHit.position;
+            //vector3.y = 0.1666667f;
+            Debug.Log(vector3.y);
+
+            agent.SetDestination(vector3);
         }
 
         private bool IsPointerOverCollider(Vector2 mousePosition, out RaycastHit hit)
@@ -209,18 +214,26 @@ namespace MummyPietree
             }
             else
             {
+                agent.isStopped = true;
+                isInteracting = true;
                 overHeadCanvas.DOFade(1f, .2f);
                 DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> moodTween = DOTween.To(() => mood, x => mood = x, mood + interactionStress, interactionDuration)
                     .SetEase(Ease.Linear)
                     .OnUpdate(UpdateMoodBar);
                 activityBar.value = 0f;
                 activityBar.DOValue(1f, interactionDuration).SetEase(Ease.Linear)
-                    .OnComplete(() => overHeadCanvas.DOFade(0f, .2f).SetDelay(.1f));
+                    .OnComplete(OnInteractionEnd);
                 if (onComplete != null)
                 {
                     moodTween.OnComplete(onComplete);
                 }
             }
+        }
+
+        private void OnInteractionEnd()
+        {
+            overHeadCanvas.DOFade(0f, .2f).SetDelay(.1f);
+            isInteracting = false;
         }
 
         private void UpdateMoodBar()
@@ -232,18 +245,8 @@ namespace MummyPietree
             }
         }
 
-        public void TransportItem(Sprite sprite)
-        {
-            transportedItem.sprite = sprite;
-            transportedItem.color = Color.white;
-        }
+        public void TransportItem(ItemSO item) => transportedItem.SetItem(item);
 
-        public Sprite UseTransportedItem()
-        {
-            transportedItem.color = Color.clear;
-            Sprite sprite = transportedItem.sprite;
-            transportedItem.sprite = null;
-            return sprite;
-        }
+        public ItemSO UseTransportedItem() => transportedItem.RemoveItem();
     }
 }
