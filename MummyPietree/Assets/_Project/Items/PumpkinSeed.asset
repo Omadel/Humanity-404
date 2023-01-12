@@ -11,7 +11,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cf1e541b86ec4a41b2c5511e2c7fcdd, type: 3}
   m_Name: PumpkinSeed
-  m_EditorClassIdentifier: Assembly-CSharp:MummyPietree:SeedSO
-  itemName: PumpkinSeed
+  m_EditorClassIdentifier: 
   itemSprite: {fileID: 21300000, guid: 8699b2c5f5d258b4c8e9aaee3982b461, type: 3}
-  grownPlant: {fileID: 11400000, guid: 07c6150b91378e340947581c2cc58d63, type: 2}
+  grownPlant: {fileID: 11400000, guid: 411d34fb167210c4287797ce229d99a6, type: 2}

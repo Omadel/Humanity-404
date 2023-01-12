@@ -13,7 +13,7 @@ namespace MummyPietree
     public class PlayerController : Singleton<PlayerController>
     {
         public Vector3 Direction => direction;
-        public ItemSO TransportedItem => transportedItem.ItemSO;
+        public ItemData TransportedItem => transportedItem.ItemSO;
 
         [SerializeField] private Room startingRoom;
         [SerializeField] private Volume volume;
@@ -65,8 +65,6 @@ namespace MummyPietree
             currentRoom = startingRoom;
             currentRoom.EnterRoom();
             HandleInteractionStress(0f);
-
-            Debug.Log(agent.isOnNavMesh);
         }
 
         public void EnterRoom(Room room)
@@ -190,11 +188,7 @@ namespace MummyPietree
 
             NavMesh.SamplePosition(positionInWorld, out NavMeshHit navHit, 10000, NavMesh.AllAreas);
 
-            Vector3 vector3 = navHit.position;
-            //vector3.y = 0.1666667f;
-            Debug.Log(vector3.y);
-
-            agent.SetDestination(vector3);
+            agent.SetDestination(navHit.position);
         }
 
         private bool IsPointerOverCollider(Vector2 mousePosition, out RaycastHit hit)
@@ -245,8 +239,8 @@ namespace MummyPietree
             }
         }
 
-        public void TransportItem(ItemSO item) => transportedItem.SetItem(item);
+        public void TransportItem(ItemData item) => transportedItem.SetItem(item);
 
-        public ItemSO UseTransportedItem() => transportedItem.RemoveItem();
+        public ItemData UseTransportedItem() => transportedItem.RemoveItem();
     }
 }

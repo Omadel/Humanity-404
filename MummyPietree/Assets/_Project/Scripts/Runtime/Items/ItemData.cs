@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MummyPietree
 {
-    public abstract class ItemSO : ScriptableObject
+    public abstract class ItemData : ScriptableObject
     {
         public Sprite ItemSprite => itemSprite;
 

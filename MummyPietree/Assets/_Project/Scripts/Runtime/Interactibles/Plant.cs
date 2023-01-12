@@ -9,7 +9,7 @@ namespace MummyPietree
         public bool IsHarverstable => isHarverstable;
         public bool HasSeed => hasSeed;
 
-        [SerializeField] private PlantSO plant;
+        [SerializeField] private PlantData plant;
         [SerializeField, MinMaxRange(0f, 5f)] private Range growthRange = new Range(0f, 1f);
         [SerializeField] private float growthDuration = 10f;
         [SerializeField] private bool hasSeed = false;
@@ -30,7 +30,7 @@ namespace MummyPietree
             }
         }
 
-        public void SowPlant(SeedSO seed)
+        public void SowPlant(SeedData seed)
         {
             plant = seed.GrownPlant;
             hasSeed = true;

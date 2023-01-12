@@ -64,10 +64,10 @@ namespace Etienne.Animator2D
                 }
 
                 float frameTime = 1000 / animation.FPS / 1000f;
-                yield return new WaitForSeconds(frameTime);
                 index %= animation.Sprites.Length;
                 renderer.sprite = animation.Sprites[index];
                 ++index;
+                yield return new WaitForSeconds(frameTime);
             }
         }
 

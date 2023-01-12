@@ -45,12 +45,14 @@ namespace MummyPietree
 
         public virtual void Interact()
         {
-            PlayerController.Instance.HandleInteractionStress(interactionStress, interactionDuration, OnInteractionEnded);
+                PlayerController.Instance.HandleInteractionStress(interactionStress, interactionDuration, OnInteractionEnded);
         }
 
         protected virtual void OnInteractionEnded()
         {
 
         }
+
+ 
     }
 }

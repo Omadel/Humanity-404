@@ -2,7 +2,7 @@ namespace MummyPietree
 {
     public class PlantPatch : Interactable
     {
-        public override bool IsInteractable => !plant.HasSeed && PlayerController.Instance.HasItem && PlayerController.Instance.TransportedItem is SeedSO;
+        public override bool IsInteractable => !plant.HasSeed && PlayerController.Instance.HasItem && PlayerController.Instance.TransportedItem is SeedData;
 
         private Plant plant;
 
@@ -14,7 +14,7 @@ namespace MummyPietree
 
         protected override void OnInteractionEnded()
         {
-            SeedSO seed = PlayerController.Instance.UseTransportedItem() as SeedSO;
+            SeedData seed = PlayerController.Instance.UseTransportedItem() as SeedData;
             plant.SowPlant(seed);
         }
     }

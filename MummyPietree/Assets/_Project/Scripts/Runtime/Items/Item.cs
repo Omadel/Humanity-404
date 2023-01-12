@@ -6,10 +6,10 @@ namespace MummyPietree
     {
         public override bool IsInteractable => isInteractabe && renderer.enabled && !PlayerController.Instance.HasItem;
         public bool HasItem => itemData != null;
-        public ItemSO ItemSO => itemData;
+        public ItemData ItemSO => itemData;
 
         [SerializeField] bool isInteractabe = true;
-        [SerializeField] private ItemSO itemData;
+        [SerializeField] private ItemData itemData;
         private new SpriteRenderer renderer;
 
         protected override void Start()
@@ -19,16 +19,16 @@ namespace MummyPietree
             renderer.enabled = false;
         }
 
-        public void SetItem(ItemSO item)
+        public void SetItem(ItemData item)
         {
             itemData = item;
             renderer.sprite = item.ItemSprite;
             renderer.enabled = true;
         }
 
-        public ItemSO RemoveItem()
+        public ItemData RemoveItem()
         {
-            ItemSO item = itemData;
+            ItemData item = itemData;
             itemData = null;
             renderer.enabled = false;
             return item;

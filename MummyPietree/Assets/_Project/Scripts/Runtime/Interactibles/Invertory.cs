@@ -22,7 +22,7 @@ namespace MummyPietree
 
         private void UseTransportedItem()
         {
-            ItemSO item = PlayerController.Instance.UseTransportedItem();
+            ItemData item = PlayerController.Instance.UseTransportedItem();
             Item emptyItem = items.Where(i => !i.HasItem).FirstOrDefault();
             emptyItem.SetItem(item);
         }

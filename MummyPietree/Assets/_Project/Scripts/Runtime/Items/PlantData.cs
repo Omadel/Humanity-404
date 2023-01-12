@@ -3,7 +3,7 @@
 namespace MummyPietree
 {
     [CreateAssetMenu(menuName = "MummyPietree/Plant")]
-    public  class PlantSO : ItemSO
+    public  class PlantData : ItemData
     {
         [SerializeField] private float itemGrowthDuration;
     }

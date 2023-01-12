@@ -9,7 +9,7 @@ namespace MummyPietree
     {
         public override bool IsInteractable => !PlayerController.Instance.HasItem;
 
-        [SerializeField] SeedSO seed;
+        [SerializeField] SeedData seed;
 
         protected override void OnInteractionEnded()
         {
