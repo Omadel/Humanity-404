@@ -24,6 +24,8 @@ namespace MummyPietree
         [SerializeField, Range(0f, 1f)] private float mood = .5f;
         [SerializeField] private Gradient moodColor;
         [SerializeField] private Slider moodBar;
+        [SerializeField] private Slider activityBar;
+        [SerializeField] private SpriteRenderer transportedItem;
 
         private Vector3 direction, position;
         private NavMeshAgent agent;
@@ -32,6 +34,9 @@ namespace MummyPietree
         private Transform cameraRoot;
         private Animator animator;
         private Animator2D animator2D;
+        private CanvasGroup overHeadCanvas;
+
+        public bool TransportsItem => transportedItem.sprite != null;
 
         protected override void Awake()
         {
@@ -43,6 +48,10 @@ namespace MummyPietree
             agent.updateUpAxis = false;
             animator = GetComponent<Animator>();
             animator2D = GetComponent<Animator2D>();
+            overHeadCanvas = GetComponentInChildren<CanvasGroup>();
+            overHeadCanvas.alpha = 0f;
+            transportedItem.color = Color.clear;
+            transportedItem.sprite = null;
         }
 
         private void Start()
@@ -108,7 +117,7 @@ namespace MummyPietree
             ComputeDirection();
 
             if (!IsPointerOverCollider(InputProvider.Instance.MousePosition, out RaycastHit hit)) return;
-            if (!hit.collider.TryGetComponent(out Interactible interactible))
+            if (!hit.collider.TryGetComponent(out Interactible interactible) || !interactible.IsInteractable)
             {
                 UnHoverInteractible();
                 return;
@@ -131,20 +140,27 @@ namespace MummyPietree
                 agent.isStopped = false;
             }
             AnimatorClipInfo[] infos = animator.GetCurrentAnimatorClipInfo(0);
-            if (direction != Vector3.zero)
+            if (agent.isStopped)
             {
-                HandleInteractionStress(stressGainMoving * Time.deltaTime);
-                //if(inf 
-                animator2D.SetState("Walk");
-                animator.Play("Player_Walk");
+                if (animator2D.GetState() != "Idle")
+                {
+                    animator2D.SetState("Idle", true);
+                    animator.Play("Player_Idle");
+                    selectedInteractible?.Interact();
+                    selectedInteractible = null;
+                    Debug.Log("Deselect Interactible");
+                }
             }
             else
             {
-                animator2D.SetState("Idle");
-                animator.Play("Player_Idle");
-                selectedInteractible?.Interact();
-                selectedInteractible = null;
-                Debug.Log("Deselect Interactible");
+                HandleInteractionStress(stressGainMoving * Time.deltaTime);
+                if (animator2D.GetState() != "Walk")
+                {
+                    animator2D.SetState("Walk", true);
+                    animator.Play("Player_Walk");
+                }
+                Vector3 right = transform.GetChild(0).right;
+                animator2D.Renderer.flipX = Vector3.Angle(right, direction) <= 90;
             }
             direction.Normalize();
         }
@@ -182,16 +198,52 @@ namespace MummyPietree
             return Physics.Raycast(ray, out hit);
         }
 
-        internal void HandleInteractionStress(float interactionStress)
+        internal void HandleInteractionStress(float interactionStress, float interactionDuration = -1f, TweenCallback onComplete = null)
         {
-            Debug.Log("HandleStress");
-            mood += interactionStress;
-            mood = Mathf.Clamp01(mood);
+            if (interactionDuration <= 0)
+            {
+
+                mood += interactionStress;
+                mood = Mathf.Clamp01(mood);
+                UpdateMoodBar();
+            }
+            else
+            {
+                overHeadCanvas.DOFade(1f, .2f);
+                DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> moodTween = DOTween.To(() => mood, x => mood = x, mood + interactionStress, interactionDuration)
+                    .SetEase(Ease.Linear)
+                    .OnUpdate(UpdateMoodBar);
+                activityBar.value = 0f;
+                activityBar.DOValue(1f, interactionDuration).SetEase(Ease.Linear)
+                    .OnComplete(() => overHeadCanvas.DOFade(0f, .2f).SetDelay(.1f));
+                if (onComplete != null)
+                {
+                    moodTween.OnComplete(onComplete);
+                }
+            }
+        }
+
+        private void UpdateMoodBar()
+        {
             if (moodBar != null)
             {
                 moodBar.fillRect.GetComponent<Image>().color = moodColor.Evaluate(mood);
                 moodBar.value = mood;
             }
+        }
+
+        public void TransportItem(Sprite sprite)
+        {
+            transportedItem.sprite = sprite;
+            transportedItem.color = Color.white;
+        }
+
+        public Sprite UseTransportedItem()
+        {
+            transportedItem.color = Color.clear;
+            Sprite sprite = transportedItem.sprite;
+            transportedItem.sprite = null;
+            return sprite;
         }
     }
 }

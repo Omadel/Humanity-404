@@ -10,6 +10,7 @@ namespace Etienne.Animator2D
         public AnimationState2D NextAnimationState => nextAnimationState;
         public AnimationState2D CurrentAnimationState => currentAnimationState;
         public AnimationState2D PreviousAnimationState => previousAnimationState;
+        public SpriteRenderer Renderer => renderer;
 
         [SerializeField] private AnimatorController2D controller;
         private AnimationState2D currentAnimationState, nextAnimationState, previousAnimationState;
