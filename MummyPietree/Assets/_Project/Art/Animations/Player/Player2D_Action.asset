@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289bc996b5dd9d54d8eef48bb17a3e1e, type: 3}
+  m_Name: Player2D_Action
+  m_EditorClassIdentifier: 
+  fps: 12
+  sprites:
+  - {fileID: 583153193, guid: 0672433f551f918459d5387b64913131, type: 3}
+  - {fileID: 2129548567, guid: 0672433f551f918459d5387b64913131, type: 3}
+  - {fileID: 299642185, guid: 0672433f551f918459d5387b64913131, type: 3}
+  - {fileID: 1562226734, guid: 0672433f551f918459d5387b64913131, type: 3}
+  - {fileID: 1697222972, guid: 0672433f551f918459d5387b64913131, type: 3}
+  - {fileID: -820191940, guid: 0672433f551f918459d5387b64913131, type: 3}
