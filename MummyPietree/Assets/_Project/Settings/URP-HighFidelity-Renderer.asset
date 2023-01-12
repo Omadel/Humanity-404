@@ -22,7 +22,7 @@ MonoBehaviour:
     Intensity: 0.5
     DirectLightingStrength: 0.25
     Radius: 0.25
-    SampleCount: 12
+    SampleCount: 20
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
