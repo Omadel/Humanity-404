@@ -42,7 +42,11 @@ namespace MummyPietree
             return currentRecipee.Contains(item);
         }
 
-
+        protected override void Start()
+        {
+            base.Start();
+            ClearSteps();
+        }
 
         protected override void OnInteractionEnded()
         {
@@ -59,39 +63,6 @@ namespace MummyPietree
                     StopCooking();
                     break;
             }
-
-
-            //if (currentRecipee.Count <= 0)
-            //{
-            //    if (_state == CookingState.Started)
-            //    {
-            //        CookingComplete();
-            //    }
-            //    else
-            //    {
-            //        currentRecipee = output.Recipee.ToList();
-            //        StartCooking();
-            //    }
-            //    return;
-            //}
-
-            //{
-            //    ItemSO item = PlayerController.Instance.UseTransportedItem();
-            //    ItemSO toRemove = currentRecipee.Where(i => i.name == item.name).FirstOrDefault();
-            //    currentRecipee.Remove(toRemove);
-            //    FillPan();
-            //}
-            //else
-            //{
-            //    if (cookingStep >= cookingSteps.Length)
-            //    {
-            //        CookingComplete();
-            //    }
-            //    else
-            //    {
-            //        StopCooking();
-            //    }
-            //}
         }
 
         private void UpdateCooking()

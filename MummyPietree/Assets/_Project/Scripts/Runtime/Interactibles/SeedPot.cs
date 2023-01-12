@@ -1,19 +1,45 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MummyPietree
 {
     public class SeedPot : Interactable
     {
-        public override bool IsInteractable => !PlayerController.Instance.HasItem;
+        public override bool IsInteractable
+        {
+            get
+            {
+                bool isFull = sellingItems.Where(i => !i.HasItem).FirstOrDefault() == null;
+                if (isFull && !PlayerController.Instance.HasItem) return true;
+                return !isFull;
+            }
+        }
 
-        [SerializeField] SeedData seed;
+        [SerializeField] private SeedData seed;
+        [SerializeField] private SellingItem[] sellingItems;
+
+        protected override void Start()
+        {
+            base.Start();
+            sellingItems = GetComponentsInChildren<SellingItem>();
+        }
 
         protected override void OnInteractionEnded()
         {
-            BuySeedAndTransport();
+            if (PlayerController.Instance.HasItem)
+            {
+                StockItemForSale(PlayerController.Instance.UseTransportedItem());
+            }
+            else
+            {
+                BuySeedAndTransport();
+            }
+        }
+
+        private void StockItemForSale(ItemData itemData)
+        {
+            Item emptyItem = sellingItems.Where(i => !i.HasItem).FirstOrDefault();
+            emptyItem.SetItem(itemData);
         }
 
         private void BuySeedAndTransport()

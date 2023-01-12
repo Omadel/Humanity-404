@@ -21,3 +21,7 @@ MonoBehaviour:
     animation: {fileID: 11400000, guid: d104fb2dcb8404d4fa1078cebdf283d2, type: 2}
     isLooping: 1
     outStateName: 
+  - name: Action
+    animation: {fileID: 11400000, guid: 9fcc08be7e1dc3149917198c56ddac2a, type: 2}
+    isLooping: 1
+    outStateName: 

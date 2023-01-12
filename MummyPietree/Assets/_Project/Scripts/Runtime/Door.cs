@@ -1,34 +1,38 @@
+using Etienne;
 using UnityEngine;
-using DG.Tweening;
 
 namespace MummyPietree
 {
-    public class Door : MonoBehaviour
+    public class Door : Interactable
     {
+        [SerializeField] private float openedDuration = 3f;
         [SerializeField] private Room redRoom, blueRoom;
         private Animator animator;
+        private Timer openedTimer;
 
-        private void Awake()
+        protected override void Start()
         {
+            base.Start();
             animator = GetComponent<Animator>();
+            openedTimer = Timer.Create(openedDuration, false).OnComplete(() => animator.CrossFade($"Door_Closed", .2f));
         }
 
-        private bool GoesToBlueRoom()
+        protected override void OnInteractionEnded()
         {
-            float angle = Vector3.Angle(transform.right, PlayerController.Instance.Direction);
-            return angle <= 90f;
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            bool goesToBlueRoom = GoesToBlueRoom();
+            bool goesToBlueRoom = blueRoom != PlayerController.Instance.CurrentRoom;
+            if (goesToBlueRoom)
+            {
+                PlayerController.Instance.EnterRoom(blueRoom);
+            }
+            else
+            {
+                PlayerController.Instance.EnterRoom(redRoom);
+            }
             animator.CrossFade($"Door_Opened{(goesToBlueRoom ? "Blue" : "Red")}", .2f);
+            openedTimer.Restart();
         }
 
-        private void OnTriggerExit(Collider other)
-        {
-            PlayerController.Instance.EnterRoom(GoesToBlueRoom() ? blueRoom : redRoom);
-        }
+
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()

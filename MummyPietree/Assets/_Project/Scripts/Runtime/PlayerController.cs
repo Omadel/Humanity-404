@@ -14,6 +14,7 @@ namespace MummyPietree
     {
         public Vector3 Direction => direction;
         public ItemData TransportedItem => transportedItem.ItemSO;
+        public Room CurrentRoom => currentRoom;
 
         [SerializeField] private Room startingRoom;
         [SerializeField] private Volume volume;
@@ -33,7 +34,6 @@ namespace MummyPietree
         private Interactable hoveredInteractible, selectedInteractible;
         private Room currentRoom;
         private Transform cameraRoot;
-        private Animator animator;
         private Animator2D animator2D;
         private CanvasGroup overHeadCanvas;
         private bool isInteracting = false;
@@ -49,7 +49,6 @@ namespace MummyPietree
             agent.updateRotation = false;
             agent.updateUpAxis = false;
             agent.Warp(transform.position);
-            animator = GetComponent<Animator>();
             animator2D = GetComponent<Animator2D>();
             overHeadCanvas = GetComponentInChildren<CanvasGroup>();
             overHeadCanvas.alpha = 0f;
@@ -88,13 +87,17 @@ namespace MummyPietree
         }
         private bool TryInteract(Vector2 mousePosition)
         {
-            if (!IsPointerOverCollider(mousePosition, out RaycastHit hit)) return false;
+                UnHoverInteractible();
+            if (!IsPointerOverCollider(mousePosition, out RaycastHit hit))
+            {
+                selectedInteractible = null;
+                return false;
+            }
             if (!hit.collider.TryGetComponent(out Interactable interactible) || !interactible.IsInteractable)
             {
                 selectedInteractible = null;
                 return false;
             }
-            UnHoverInteractible();
             interactible.Release();
             selectedInteractible = interactible;
             return true;
@@ -144,7 +147,6 @@ namespace MummyPietree
                 if (animator2D.GetState() != "Idle")
                 {
                     animator2D.SetState("Idle", true);
-                    animator.Play("Player_Idle");
                     selectedInteractible?.Interact();
                     selectedInteractible = null;
                 }
@@ -155,7 +157,6 @@ namespace MummyPietree
                 if (animator2D.GetState() != "Walk")
                 {
                     animator2D.SetState("Walk", true);
-                    animator.Play("Player_Walk");
                 }
                 Vector3 right = transform.GetChild(0).right;
                 animator2D.FlipX(Vector3.Angle(right, direction) <= 90);
@@ -165,10 +166,6 @@ namespace MummyPietree
 
         private void MoveTo(Vector2 mousePosition)
         {
-            if (TryInteract(mousePosition))
-            {
-                //return;
-            }
             Vector3 positionInWorld;
             if (!IsPointerOverCollider(mousePosition, out RaycastHit hit))
             {
@@ -184,6 +181,19 @@ namespace MummyPietree
             else
             {
                 positionInWorld = hit.point;
+            }
+            if (TryInteract(mousePosition))
+            {
+                Vector3 position = transform.position;
+                position.y = positionInWorld.y;
+                if (Vector3.Distance(position, positionInWorld) <= 1f)
+                {
+
+                    animator2D.SetState("Idle", true);
+                    selectedInteractible?.Interact();
+                    selectedInteractible = null;
+                    return;
+                }
             }
 
             NavMesh.SamplePosition(positionInWorld, out NavMeshHit navHit, 10000, NavMesh.AllAreas);
@@ -205,10 +215,12 @@ namespace MummyPietree
                 mood += interactionStress;
                 mood = Mathf.Clamp01(mood);
                 UpdateMoodBar();
+                onComplete?.Invoke();
             }
             else
             {
                 agent.isStopped = true;
+                animator2D.SetState("Action");
                 isInteracting = true;
                 overHeadCanvas.DOFade(1f, .2f);
                 DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> moodTween = DOTween.To(() => mood, x => mood = x, mood + interactionStress, interactionDuration)
@@ -228,6 +240,7 @@ namespace MummyPietree
         {
             overHeadCanvas.DOFade(0f, .2f).SetDelay(.1f);
             isInteracting = false;
+            animator2D.SetState("Idle");
         }
 
         private void UpdateMoodBar()
