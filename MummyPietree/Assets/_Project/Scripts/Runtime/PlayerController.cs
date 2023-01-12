@@ -1,5 +1,6 @@
 using DG.Tweening;
 using Etienne;
+using Etienne.Animator2D;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
@@ -26,21 +27,22 @@ namespace MummyPietree
 
         private Vector3 direction, position;
         private NavMeshAgent agent;
-        private Interactible hoveredInteractible;
+        private Interactible hoveredInteractible, selectedInteractible;
         private Room currentRoom;
         private Transform cameraRoot;
-        Animator animator;
+        private Animator animator;
+        private Animator2D animator2D;
 
         protected override void Awake()
         {
             base.Awake();
             InputProvider.Instance.OnLeftMouseButtonPressed += BeginInteraction;
-            InputProvider.Instance.OnLeftMouseButtonReleased += Interact;
-            InputProvider.Instance.OnRightMouseButtonPressed += MoveTo;
+            InputProvider.Instance.OnLeftMouseButtonReleased += MoveTo;
             agent = GetComponent<NavMeshAgent>();
             agent.updateRotation = false;
             agent.updateUpAxis = false;
             animator = GetComponent<Animator>();
+            animator2D = GetComponent<Animator2D>();
         }
 
         private void Start()
@@ -74,13 +76,18 @@ namespace MummyPietree
             UnHoverInteractible();
             interactible.Click();
         }
-        private void Interact(Vector2 mousePosition)
+        private bool TryInteract(Vector2 mousePosition)
         {
-            if (!IsPointerOverCollider(mousePosition, out RaycastHit hit)) return;
-            if (!hit.collider.TryGetComponent(out Interactible interactible)) return;
+            if (!IsPointerOverCollider(mousePosition, out RaycastHit hit)) return false;
+            if (!hit.collider.TryGetComponent(out Interactible interactible))
+            {
+                return false;
+            }
             UnHoverInteractible();
             interactible.Release();
-            interactible.Interact();
+            selectedInteractible = interactible;
+            Debug.Log("Select interactible");
+            return true;
         }
 
         private void HoverInteractible(Interactible interactible)
@@ -114,20 +121,40 @@ namespace MummyPietree
             Vector3 oldPosition = position;
             position = transform.position;
             direction = oldPosition.Direction(position);
+            if (Vector3.Distance(position, agent.destination) <= .2f)
+            {
+                direction = Vector3.zero;
+                agent.isStopped = true;
+            }
+            else
+            {
+                agent.isStopped = false;
+            }
+            AnimatorClipInfo[] infos = animator.GetCurrentAnimatorClipInfo(0);
             if (direction != Vector3.zero)
             {
                 HandleInteractionStress(stressGainMoving * Time.deltaTime);
+                //if(inf 
+                animator2D.SetState("Walk");
                 animator.Play("Player_Walk");
             }
             else
             {
+                animator2D.SetState("Idle");
                 animator.Play("Player_Idle");
+                selectedInteractible?.Interact();
+                selectedInteractible = null;
+                Debug.Log("Deselect Interactible");
             }
             direction.Normalize();
         }
 
         private void MoveTo(Vector2 mousePosition)
         {
+            if (TryInteract(mousePosition))
+            {
+                //return;
+            }
             Vector3 positionInWorld;
             if (!IsPointerOverCollider(mousePosition, out RaycastHit hit))
             {
