@@ -37,6 +37,7 @@ namespace MummyPietree
         private Animator2D animator2D;
         private CanvasGroup overHeadCanvas;
         private bool isInteracting = false;
+        private AlienAI ai;
 
         public bool HasItem => transportedItem.HasItem;
 
@@ -50,8 +51,10 @@ namespace MummyPietree
             agent.updateUpAxis = false;
             agent.Warp(transform.position);
             animator2D = GetComponent<Animator2D>();
+            ai = GetComponent<AlienAI>();
             overHeadCanvas = GetComponentInChildren<CanvasGroup>();
             overHeadCanvas.alpha = 0f;
+
         }
 
         private void Start()
@@ -118,8 +121,12 @@ namespace MummyPietree
 
         private void Update()
         {
-            if (isInteracting) return;
+            if (isInteracting ) return;
+
             ComputeDirection();
+
+            if (ai.IsActivated)
+                return;
 
             if (!IsPointerOverCollider(InputProvider.Instance.MousePosition, out RaycastHit hit)) return;
             if (!hit.collider.TryGetComponent(out Interactable interactible) || !interactible.IsInteractable)
@@ -166,8 +173,11 @@ namespace MummyPietree
             direction.Normalize();
         }
 
-        private void MoveTo(Vector2 mousePosition)
+        public void MoveTo(Vector2 mousePosition)
         {
+            if (ai.IsActivated)
+                return;
+
             Vector3 positionInWorld;
             if (!IsPointerOverCollider(mousePosition, out RaycastHit hit))
             {
@@ -191,14 +201,26 @@ namespace MummyPietree
                 if (Vector3.Distance(position, positionInWorld) <= 1f)
                 {
 
-                    animator2D.SetState("Idle", true);
-                    selectedInteractible?.Interact();
-                    selectedInteractible = null;
+                    Interact(selectedInteractible);
                     return;
                 }
             }
 
             NavMesh.SamplePosition(positionInWorld, out NavMeshHit navHit, 10000, NavMesh.AllAreas);
+
+            agent.SetDestination(navHit.position);
+        }
+
+        public void Interact(Interactable interactable)
+        {
+            animator2D.SetState("Idle", true);
+            interactable?.Interact();
+            selectedInteractible = null;
+        }
+
+        public void MoveToPosition(Vector3 world)
+        {
+            NavMesh.SamplePosition(world, out NavMeshHit navHit, 10000, NavMesh.AllAreas);
 
             agent.SetDestination(navHit.position);
         }

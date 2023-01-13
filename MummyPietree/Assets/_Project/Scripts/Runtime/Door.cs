@@ -1,12 +1,22 @@
 using Etienne;
+using System.Collections;
 using UnityEngine;
 
 namespace MummyPietree
 {
     public class Door : Interactable
     {
+        public IEnumerator Rooms()
+        {
+            yield return redRoom;
+            yield return blueRoom;
+        }
+        
         [SerializeField] private float openedDuration = 3f;
         [SerializeField] private Room redRoom, blueRoom;
+
+
+
         private Animator animator;
         private Timer openedTimer;
 

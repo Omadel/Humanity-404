@@ -5,7 +5,11 @@ namespace MummyPietree
 {
     public class Room : MonoBehaviour
     {
+        public Door[] ConnectedDoors => connectedDoors;
+        public Interactable[] Activities;
+
         [SerializeField] private Door[] connectedDoors;
+
 
         public void EnterRoom()
         {
