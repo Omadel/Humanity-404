@@ -27,6 +27,7 @@ namespace MummyPietree
         [SerializeField] private Gradient moodColor;
         [SerializeField] private Slider moodBar;
         [SerializeField] private Slider activityBar;
+        [SerializeField] private Image[] imageHearts;
         [SerializeField] private Item transportedItem;
 
         private Vector3 direction;
@@ -38,6 +39,7 @@ namespace MummyPietree
         private CanvasGroup overHeadCanvas;
         private bool isInteracting = false;
         private AlienAI ai;
+        private int heartCount;
 
         public bool HasItem => transportedItem.HasItem;
 
@@ -55,6 +57,7 @@ namespace MummyPietree
             overHeadCanvas = GetComponentInChildren<CanvasGroup>();
             overHeadCanvas.alpha = 0f;
 
+            heartCount = 4;
         }
 
         private void Start()
@@ -155,8 +158,18 @@ namespace MummyPietree
                 if (animator2D.GetState() != stateName)
                 {
                     animator2D.SetState(stateName, true);
+
+                    if (selectedInteractible != null )
+                    {
+                        if (ai.IsActivated == false && mood <= 0.2f)
+                        {
+                            RemoveHeart();
+                        }
+                    }
+
                     selectedInteractible?.Interact();
                     selectedInteractible = null;
+           
                 }
             }
             else
@@ -215,7 +228,35 @@ namespace MummyPietree
         {
             animator2D.SetState("Idle", true);
             interactable?.Interact();
+
+            if ( ai.IsActivated == false &&  mood <= 0.2f)
+            {
+                RemoveHeart();
+            }
+
             selectedInteractible = null;
+        }
+
+        void ResetHearts()
+        {
+            foreach (var item in imageHearts)
+            {
+                item.enabled = true;
+            }
+        }
+
+        void RemoveHeart()
+        {
+            if (heartCount >= 1)
+                heartCount--;
+
+            imageHearts[heartCount].enabled = false;
+
+            if ( heartCount == 1)
+            {
+                ai.ActivateAI();
+            }
+
         }
 
         public void MoveToPosition(Vector3 world)

@@ -37,7 +37,7 @@ namespace MummyPietree
 
         private void Start()
         {
-            SetWaitState();
+            SetWaitState(0);
         }
 
         public void ActivateAI()
@@ -51,7 +51,7 @@ namespace MummyPietree
         }
 
 
-        void SetWaitState()
+        void SetWaitState(float durationToAdd = 0.0f)
         {
             if (_wasDoor)
             {
@@ -61,6 +61,8 @@ namespace MummyPietree
             {
                 _timer = Random.Range(WaitMin, WaitMax);
             }
+
+            _timer += durationToAdd;
             _state = AlienBrainState.Waiting;
         }
 
@@ -86,9 +88,9 @@ namespace MummyPietree
                 if (Vector3.Distance(position, _currentActivity.transform.position) <= 1f)
                 {
                     _player.Interact(_currentActivity);
+                    SetWaitState(_currentActivity.InteractionDuration);
                     _currentActivity = null;
 
-                    SetWaitState();
                     return;
                 }
             }

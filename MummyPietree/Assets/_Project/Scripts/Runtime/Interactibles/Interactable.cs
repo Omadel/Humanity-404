@@ -6,6 +6,9 @@ namespace MummyPietree
     [RequireComponent(typeof(Outline))]
     public class Interactable : MonoBehaviour
     {
+
+        public float InteractionDuration => interactionDuration;
+
         [SerializeField, Range(-1f,1f)]protected float interactionStress = -.1f;
         [SerializeField]protected float interactionDuration = 1f;
 
