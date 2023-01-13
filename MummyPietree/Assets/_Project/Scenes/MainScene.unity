@@ -2312,6 +2312,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 753461796}
     m_Modifications:
+    - target: {fileID: 2010214390, guid: cb98543de4278cc4485c05e345704314, type: 3}
+      propertyPath: interactionStress
+      value: -0.04
+      objectReference: {fileID: 0}
     - target: {fileID: 5555632262162217481, guid: cb98543de4278cc4485c05e345704314,
         type: 3}
       propertyPath: m_RootOrder
@@ -2630,7 +2634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54270ad9e0476a64dae0854ec4e1712f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionStress: -0.1
+  interactionStress: 0.09
   interactionDuration: 1
   scaledTime: 5
 --- !u!114 &545568140
@@ -3237,6 +3241,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 753461796}
     m_Modifications:
+    - target: {fileID: 360467683600692329, guid: d1bd654369c6a9f4f9823f0358dac0bf,
+        type: 3}
+      propertyPath: interactionStress
+      value: -0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 360467683600692334, guid: d1bd654369c6a9f4f9823f0358dac0bf,
         type: 3}
       propertyPath: m_RootOrder
@@ -4329,7 +4338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc381b857ffaf6140b66aa54fdbcc4d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionStress: -0.1
+  interactionStress: -0.04
   interactionDuration: 1
   scaledTime: 1
   items:
@@ -5012,6 +5021,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kitchen
       objectReference: {fileID: 0}
+    - target: {fileID: 2757648164608911126, guid: 5f6ec03f32cbdc34f9a467ca5798052b,
+        type: 3}
+      propertyPath: interactionStress
+      value: -0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 2792442547403044240, guid: 5f6ec03f32cbdc34f9a467ca5798052b,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -5061,6 +5075,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4139004871518910259, guid: 5f6ec03f32cbdc34f9a467ca5798052b,
+        type: 3}
+      propertyPath: interactionStress
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4655366582915254592, guid: 5f6ec03f32cbdc34f9a467ca5798052b,
         type: 3}
@@ -5541,6 +5560,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 753461796}
     m_Modifications:
+    - target: {fileID: 360467683600692329, guid: d1bd654369c6a9f4f9823f0358dac0bf,
+        type: 3}
+      propertyPath: interactionStress
+      value: -0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 360467683600692334, guid: d1bd654369c6a9f4f9823f0358dac0bf,
         type: 3}
       propertyPath: m_RootOrder
@@ -6072,6 +6096,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 753461796}
     m_Modifications:
+    - target: {fileID: 360467683600692329, guid: d1bd654369c6a9f4f9823f0358dac0bf,
+        type: 3}
+      propertyPath: interactionStress
+      value: -0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 360467683600692334, guid: d1bd654369c6a9f4f9823f0358dac0bf,
         type: 3}
       propertyPath: m_RootOrder
@@ -20339,6 +20368,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 753461796}
     m_Modifications:
+    - target: {fileID: 360467683600692329, guid: d1bd654369c6a9f4f9823f0358dac0bf,
+        type: 3}
+      propertyPath: interactionStress
+      value: -0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 360467683600692334, guid: d1bd654369c6a9f4f9823f0358dac0bf,
         type: 3}
       propertyPath: m_RootOrder
@@ -20572,6 +20606,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2312198141267646208, guid: 2ccb987d7e49030469aa4c447ac2ebbf,
+        type: 3}
+      propertyPath: mood
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 2312198141267646208, guid: 2ccb987d7e49030469aa4c447ac2ebbf,
         type: 3}
