@@ -44,10 +44,8 @@ namespace MummyPietree
         {
             float value = growthRange.Lerp(transform.localScale.x);
             int meshIndex = Mathf.CeilToInt(value * plant.GrowingStateMeshes.Length - 1);
-            ///Debug.Log(meshIndex);
             filter.mesh = plant.GrowingStateMeshes[meshIndex];
             renderer.material = plant.GrowingStateMaterials[meshIndex];
-            Debug.Log(renderer.material);
         }
 
         private void GrowthCompleted()

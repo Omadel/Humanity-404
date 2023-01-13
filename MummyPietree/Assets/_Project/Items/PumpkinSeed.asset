@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf1e541b86ec4a41b2c5511e2c7fcdd, type: 3}
   m_Name: PumpkinSeed
   m_EditorClassIdentifier: 
-  itemSprite: {fileID: 21300000, guid: 8699b2c5f5d258b4c8e9aaee3982b461, type: 3}
+  itemSprite: {fileID: 21300000, guid: c94e3651db8ea5b4b92a04f9b5db201e, type: 3}
+  price: 100
   grownPlant: {fileID: 11400000, guid: 411d34fb167210c4287797ce229d99a6, type: 2}
