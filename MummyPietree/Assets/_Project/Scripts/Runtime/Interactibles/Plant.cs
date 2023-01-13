@@ -8,6 +8,7 @@ namespace MummyPietree
     {
         public bool IsHarverstable => isHarverstable;
         public bool HasSeed => hasSeed;
+        public override bool IsInteractable => isHarverstable;
 
         [SerializeField] private PlantData plant;
         [SerializeField, MinMaxRange(0f, 5f)] private Range growthRange = new Range(0f, 1f);
@@ -15,7 +16,8 @@ namespace MummyPietree
         [SerializeField] private bool hasSeed = false;
         [SerializeField, ReadOnly] private bool isHarverstable = false;
 
-        public override bool IsInteractable => isHarverstable;
+        new MeshRenderer renderer;
+        MeshFilter filter;
 
         protected override void Start()
         {
@@ -28,13 +30,23 @@ namespace MummyPietree
             {
                 transform.localScale = Vector3.zero;
             }
+            renderer = GetComponent<MeshRenderer>();
+            filter = GetComponent<MeshFilter>();
         }
 
         public void SowPlant(SeedData seed)
         {
             plant = seed.GrownPlant;
             hasSeed = true;
-            transform.DOScale(growthRange.Max, growthDuration).OnComplete(GrowthCompleted).SetEase(Ease.Linear);
+            transform.DOScale(growthRange.Max, plant.ItemGrowthDuration).OnUpdate(UpdatePlantMesh).OnComplete(GrowthCompleted).SetEase(Ease.Linear);
+        }
+
+        private void UpdatePlantMesh()
+        {
+            var value = growthRange.Lerp(transform.localScale.x);
+            int meshIndex =Mathf.CeilToInt(value * plant.GrowingStateMeshes.Length-1);
+            Debug.Log(meshIndex);
+            filter.mesh = plant.GrowingStateMeshes[meshIndex];
         }
 
         private void GrowthCompleted()
