@@ -11,14 +11,15 @@ namespace MummyPietree
         public event Action<Vector2> OnLeftMouseButtonPressed, OnLeftMouseButtonReleased,
             OnMouseDrag,
             OnRightMouseButtonPressed, OnRightMouseButtonReleased;
+        public event Action OnPauseGame, OnResumeGame;
         public Vector2 MousePosition => Mouse.current.position.ReadValue();
 
         private float leftButtonState = 0;
         private float rightButtonState = 0;
 
-
         private void Update()
         {
+            if (Time.timeScale <= 0f) return;
             HandleMouseLeftButton();
             HandleMouseRightButton();
         }
@@ -48,6 +49,18 @@ namespace MummyPietree
             {
                 if (rightButtonState > 0f) OnRightMouseButtonPressed?.Invoke(MousePosition);
                 else OnRightMouseButtonReleased?.Invoke(MousePosition);
+            }
+        }
+
+        private void OnPause(InputValue value)
+        {
+            if (Time.timeScale <= 0f)
+            {
+                OnResumeGame?.Invoke();
+            }
+            else
+            {
+                OnPauseGame?.Invoke();
             }
         }
     }
