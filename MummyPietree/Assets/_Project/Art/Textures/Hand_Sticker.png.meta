@@ -66,7 +66,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 16384
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -104,7 +104,175 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hand_Sticker 1_0
+      name: Hand_Sticker_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1024
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4afc5b7e8a33eec46b8b727a330ca21b
+      internalID: 906134785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hand_Sticker_1
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1024
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abdc78a0170199948b66249525431ec1
+      internalID: 775137089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hand_Sticker_2
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1024
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbf160a27d0349a49afc1f83be2719b3
+      internalID: -203762888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hand_Sticker_3
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 1024
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af47cefa6de3a364f9d91a1161ea0c22
+      internalID: 628612761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hand_Sticker_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af390e1d6028e6543b2e0d2b990c39fa
+      internalID: 2051773362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hand_Sticker_5
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c6165a83217f234da6c92f4e79536c8
+      internalID: 694502980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hand_Sticker_6
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 512
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79c39f3331cb8c24191ae297ef76bf02
+      internalID: 956641739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hand_Sticker_7
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 512
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f90927646605b64a9ef67f89b3ad993
+      internalID: -199437057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hand_Sticker_8
       rect:
         serializedVersion: 2
         x: 0
@@ -118,14 +286,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25c47d3c39791834a888e3dae0c12a74
-      internalID: -1810044371
+      spriteID: 4ca5687b40d45ce45a889aef8b071cba
+      internalID: -975474775
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hand_Sticker 1_1
+      name: Hand_Sticker_9
       rect:
         serializedVersion: 2
         x: 512
@@ -139,14 +307,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d39df33564720f4a91e887a35d3613f
-      internalID: -1594399377
+      spriteID: ed38bbb349a6a544e9d9311483e5809b
+      internalID: 385204636
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hand_Sticker 1_2
+      name: Hand_Sticker_10
       rect:
         serializedVersion: 2
         x: 1024
@@ -160,14 +328,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a2fa8197d3f22d140b1d1cba78ef396f
-      internalID: 1825795136
+      spriteID: a9d2a0b560b79eb4b8802c35f22b3334
+      internalID: -1868528468
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hand_Sticker 1_3
+      name: Hand_Sticker_11
       rect:
         serializedVersion: 2
         x: 1536
@@ -181,176 +349,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 407d49dbe2b910e4d981595fad293997
-      internalID: -1574913575
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hand_Sticker 1_4
-      rect:
-        serializedVersion: 2
-        x: 2048
-        y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cfc77630d9f94d3498abb6a4f0750fee
-      internalID: 1591909387
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hand_Sticker 1_5
-      rect:
-        serializedVersion: 2
-        x: 2560
-        y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9044bd5722857f045a3a804bfdf5a2bc
-      internalID: 690365353
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hand_Sticker 1_6
-      rect:
-        serializedVersion: 2
-        x: 3072
-        y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f0ca0e413054d4344ad1147da2435360
-      internalID: -155649602
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hand_Sticker 1_7
-      rect:
-        serializedVersion: 2
-        x: 3584
-        y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c3573b551a624534f9ad7a9833bc6b0e
-      internalID: 21285613
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hand_Sticker 1_8
-      rect:
-        serializedVersion: 2
-        x: 4096
-        y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d97ff72e8e0a4bd4d83874fd3266b8c1
-      internalID: -1845511373
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hand_Sticker 1_9
-      rect:
-        serializedVersion: 2
-        x: 4608
-        y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: db0cd4f1f7b4072488dc3ab2329ddf82
-      internalID: -1667219635
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hand_Sticker 1_10
-      rect:
-        serializedVersion: 2
-        x: 5120
-        y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 41d28a3dbdeba554ea1a4716d92da179
-      internalID: -1179054780
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hand_Sticker 1_11
-      rect:
-        serializedVersion: 2
-        x: 5632
-        y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2524275a7b21f384ba46468315cdbaee
-      internalID: -33591301
+      spriteID: 7708dbe1c10f4ce44af8f5b91afc8c4f
+      internalID: 619747682
       vertices: []
       indices: 
       edges: []
@@ -366,18 +366,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Hand_Sticker 1_2: 1825795136
-      Hand_Sticker 1_0: -1810044371
-      Hand_Sticker 1_8: -1845511373
-      Hand_Sticker 1_4: 1591909387
-      Hand_Sticker 1_5: 690365353
-      Hand_Sticker 1_3: -1574913575
-      Hand_Sticker 1_7: 21285613
-      Hand_Sticker 1_10: -1179054780
-      Hand_Sticker 1_6: -155649602
-      Hand_Sticker 1_11: -33591301
-      Hand_Sticker 1_1: -1594399377
-      Hand_Sticker 1_9: -1667219635
+      Hand_Sticker_0: 906134785
+      Hand_Sticker_2: -203762888
+      Hand_Sticker_5: 694502980
+      Hand_Sticker_3: 628612761
+      Hand_Sticker_10: -1868528468
+      Hand_Sticker_7: -199437057
+      Hand_Sticker_11: 619747682
+      Hand_Sticker_1: 775137089
+      Hand_Sticker_9: 385204636
+      Hand_Sticker_4: 2051773362
+      Hand_Sticker_6: 956641739
+      Hand_Sticker_8: -975474775
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
