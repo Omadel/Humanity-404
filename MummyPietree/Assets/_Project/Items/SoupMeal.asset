@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SoupMeal
   m_EditorClassIdentifier: 
   itemSprite: {fileID: 21300000, guid: f58cb5a4604316845a11026fab12f8e0, type: 3}
+  price: 1000
   recipee:
-  - {fileID: 11400000, guid: 411d34fb167210c4287797ce229d99a6, type: 2}
   - {fileID: 11400000, guid: 411d34fb167210c4287797ce229d99a6, type: 2}
   - {fileID: 11400000, guid: 411d34fb167210c4287797ce229d99a6, type: 2}
