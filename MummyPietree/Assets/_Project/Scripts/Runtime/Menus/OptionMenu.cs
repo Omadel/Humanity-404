@@ -74,7 +74,7 @@ namespace MummyPietree
             mixer.SetFloat(floatName, Mathf.Log10(value) * 20f);
         }
 
-        private void Return()
+        public void Return()
         {
             if (isMainMenu)
             {

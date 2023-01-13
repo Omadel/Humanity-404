@@ -30,6 +30,7 @@ namespace MummyPietree
         [SerializeField] private Image[] imageHearts;
         [SerializeField] private Item transportedItem;
         [SerializeField] private GameObject IconGrumpy;
+        [SerializeField] float grumpyThreshold = 0.2f;
 
         private Vector3 direction;
         private NavMeshAgent agent;
@@ -230,7 +231,7 @@ namespace MummyPietree
             animator2D.SetState("Idle", true);
             interactable?.Interact();
 
-            if ( ai.IsActivated == false &&  mood <= 0.2f)
+            if ( ai.IsActivated == false &&  mood <= grumpyThreshold)
             {
                 RemoveHeart();
             }
@@ -238,12 +239,14 @@ namespace MummyPietree
             selectedInteractible = null;
         }
 
-        void ResetHearts()
+        public void DisableAI()
         {
             foreach (var item in imageHearts)
             {
                 item.enabled = true;
             }
+            IconGrumpy.SetActive(false);
+            ai.DisableAI();
         }
 
         void RemoveHeart()

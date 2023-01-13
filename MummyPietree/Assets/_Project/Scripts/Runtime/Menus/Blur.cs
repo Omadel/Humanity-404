@@ -16,11 +16,13 @@ namespace MummyPietree
 
         private void TurnOn()
         {
+            gameObject.SetActive(true);
             renderCamera.gameObject.SetActive(true);
             main.gameObject.SetActive(false);
         }
         private void TurnOff()
         {
+            gameObject.SetActive(false);
             renderCamera.gameObject.SetActive(false);
             main.gameObject.SetActive(true);
         }

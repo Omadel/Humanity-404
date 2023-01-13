@@ -42,6 +42,16 @@ namespace MummyPietree
             emptyItem.SetItem(itemData);
         }
 
+        internal int CalculateSellingPrice()
+        {
+            int price = 0;
+            foreach (SellingItem item in sellingItems)
+            {
+                if (item.HasItem) price += item.ItemSO.Price;
+            }
+            return price;
+        }
+
         private void BuySeedAndTransport()
         {
             PlayerController.Instance.TransportItem(seed);
