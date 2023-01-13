@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289bc996b5dd9d54d8eef48bb17a3e1e, type: 3}
   m_Name: Player2D_IdleCarry
   m_EditorClassIdentifier: 
-  fps: 12
+  fps: 4
   sprites:
   - {fileID: -1629200083, guid: 0e3b4ec6d736f9645bd81577a441f0bb, type: 3}
   - {fileID: 1724127997, guid: 0e3b4ec6d736f9645bd81577a441f0bb, type: 3}

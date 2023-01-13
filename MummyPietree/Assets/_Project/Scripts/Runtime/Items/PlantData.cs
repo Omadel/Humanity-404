@@ -7,9 +7,11 @@ namespace MummyPietree
     {
         public float ItemGrowthDuration => itemGrowthDuration;
         public Mesh[] GrowingStateMeshes => growingStateMeshes;
+        public Material[] GrowingStateMaterials => growingStateMaterials;
 
         [SerializeField] private float itemGrowthDuration;
         [SerializeField] private Mesh[] growingStateMeshes;
+        [SerializeField] Material[] growingStateMaterials;
     }
 
 

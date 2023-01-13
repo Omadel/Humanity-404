@@ -15,9 +15,8 @@ namespace MummyPietree
         [SerializeField] private float growthDuration = 10f;
         [SerializeField] private bool hasSeed = false;
         [SerializeField, ReadOnly] private bool isHarverstable = false;
-
-        new MeshRenderer renderer;
-        MeshFilter filter;
+        private new MeshRenderer renderer;
+        private MeshFilter filter;
 
         protected override void Start()
         {
@@ -30,8 +29,8 @@ namespace MummyPietree
             {
                 transform.localScale = Vector3.zero;
             }
-            renderer = GetComponent<MeshRenderer>();
-            filter = GetComponent<MeshFilter>();
+            renderer = GetComponentInChildren<MeshRenderer>();
+            filter = GetComponentInChildren<MeshFilter>();
         }
 
         public void SowPlant(SeedData seed)
@@ -43,10 +42,12 @@ namespace MummyPietree
 
         private void UpdatePlantMesh()
         {
-            var value = growthRange.Lerp(transform.localScale.x);
-            int meshIndex =Mathf.CeilToInt(value * plant.GrowingStateMeshes.Length-1);
-            Debug.Log(meshIndex);
+            float value = growthRange.Lerp(transform.localScale.x);
+            int meshIndex = Mathf.CeilToInt(value * plant.GrowingStateMeshes.Length - 1);
+            ///Debug.Log(meshIndex);
             filter.mesh = plant.GrowingStateMeshes[meshIndex];
+            renderer.material = plant.GrowingStateMaterials[meshIndex];
+            Debug.Log(renderer.material);
         }
 
         private void GrowthCompleted()

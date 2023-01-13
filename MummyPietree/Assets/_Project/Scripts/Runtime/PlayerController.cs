@@ -87,7 +87,7 @@ namespace MummyPietree
         }
         private bool TryInteract(Vector2 mousePosition)
         {
-                UnHoverInteractible();
+            UnHoverInteractible();
             if (!IsPointerOverCollider(mousePosition, out RaycastHit hit))
             {
                 selectedInteractible = null;
@@ -144,19 +144,21 @@ namespace MummyPietree
             }
             if (agent.isStopped)
             {
-                if (animator2D.GetState() != "Idle")
+                string stateName = "Idle" + (HasItem ? "Carry" : "");
+                if (animator2D.GetState() != stateName)
                 {
-                    animator2D.SetState("Idle", true);
+                    animator2D.SetState(stateName, true);
                     selectedInteractible?.Interact();
                     selectedInteractible = null;
                 }
             }
             else
             {
+                string stateName = "Walk" + (HasItem ? "Carry" : "");
                 HandleInteractionStress(stressGainMoving * Time.deltaTime);
-                if (animator2D.GetState() != "Walk")
+                if (animator2D.GetState() != stateName)
                 {
-                    animator2D.SetState("Walk", true);
+                    animator2D.SetState(stateName, true);
                 }
                 Vector3 right = transform.GetChild(0).right;
                 animator2D.FlipX(Vector3.Angle(right, direction) <= 90);

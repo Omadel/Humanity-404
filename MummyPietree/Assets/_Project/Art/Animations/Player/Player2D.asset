@@ -25,3 +25,11 @@ MonoBehaviour:
     animation: {fileID: 11400000, guid: 9fcc08be7e1dc3149917198c56ddac2a, type: 2}
     isLooping: 1
     outStateName: 
+  - name: IdleCarry
+    animation: {fileID: 11400000, guid: dc748c233c1c51a4b81af5aab0359dbe, type: 2}
+    isLooping: 1
+    outStateName: 
+  - name: WalkCarry
+    animation: {fileID: 11400000, guid: 9dc96ad1050cd2a4ea98d833802c973e, type: 2}
+    isLooping: 1
+    outStateName: 

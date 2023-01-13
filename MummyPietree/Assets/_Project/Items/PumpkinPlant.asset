@@ -15,5 +15,6 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 76572882b3c4072418a1d95ab8a7f6ad, type: 3}
   itemGrowthDuration: 2
   growingStateMeshes:
-  - {fileID: -3341646133470400913, guid: d61b6577b12ebb74886b6c1853cee815, type: 3}
   - {fileID: -4780861048323362081, guid: fb955af51d4f75842b98408ec5b195e6, type: 3}
+  growingStateMaterials:
+  - {fileID: 2100000, guid: aed30f8cc0ab55b46a195b53d81feac8, type: 2}
