@@ -24,6 +24,7 @@ namespace MummyPietree
         protected override void OnInteractionEnded()
         {
             animator.CrossFade("FridgeClose", .25f);
+            PlayerController.Instance.DisableAI();
         }
     }
 }
