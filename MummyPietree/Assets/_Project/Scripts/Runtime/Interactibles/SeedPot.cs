@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -49,7 +50,17 @@ namespace MummyPietree
             {
                 if (item.HasItem) price += item.ItemSO.Price;
             }
+            SellAll();
+
             return price;
+        }
+
+        private void SellAll()
+        {
+            foreach (var item in sellingItems)
+            {
+                item.RemoveItem();
+            }
         }
 
         private void BuySeedAndTransport()
