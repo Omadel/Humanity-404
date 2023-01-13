@@ -648,4 +648,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09d72f2f746a9524a842d291df8d9fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Interactables: []
+  WaitMin: 4
+  WaitMax: 8
+  TimerAfterDoor: 1
