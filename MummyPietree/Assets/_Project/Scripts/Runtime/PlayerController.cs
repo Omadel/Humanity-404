@@ -29,6 +29,7 @@ namespace MummyPietree
         [SerializeField] private Slider activityBar;
         [SerializeField] private Image[] imageHearts;
         [SerializeField] private Item transportedItem;
+        [SerializeField] private GameObject IconGrumpy;
 
         private Vector3 direction;
         private NavMeshAgent agent;
@@ -254,6 +255,7 @@ namespace MummyPietree
 
             if ( heartCount == 1)
             {
+                IconGrumpy.SetActive(true);
                 ai.ActivateAI();
             }
 
