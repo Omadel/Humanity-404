@@ -245,6 +245,7 @@ namespace MummyPietree
             {
                 item.enabled = true;
             }
+            heartCount = imageHearts.Length;
             IconGrumpy.SetActive(false);
             ai.DisableAI();
         }

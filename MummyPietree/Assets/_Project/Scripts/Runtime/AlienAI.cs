@@ -43,6 +43,8 @@ namespace MummyPietree
         public void ActivateAI()
         {
             _isActivated = true;
+            _wasDoor = false;
+            SetWaitState(0);
         }
 
         public void DisableAI()

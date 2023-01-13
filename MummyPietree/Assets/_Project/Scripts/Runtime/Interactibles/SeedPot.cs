@@ -65,6 +65,7 @@ namespace MummyPietree
 
         private void BuySeedAndTransport()
         {
+            MoneyHandler.Instance.AddMoney(-seed.Price);
             PlayerController.Instance.TransportItem(seed);
         }
     }

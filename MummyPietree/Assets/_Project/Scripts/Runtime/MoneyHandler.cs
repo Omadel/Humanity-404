@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace MummyPietree
 {
-    public class MoneyHandler : MonoBehaviour
+    public class MoneyHandler : Singleton<MoneyHandler>
     {
         [SerializeField] private TMPro.TextMeshProUGUI moneyDisplay;
         [SerializeField] private TMPro.TextMeshProUGUI dayGamOverDiaplay;
@@ -18,8 +18,9 @@ namespace MummyPietree
         private int dayLeft = 0;
         private int days = 0;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             defeatObject.SetActive(false);
         }
 
@@ -41,7 +42,7 @@ namespace MummyPietree
             dayGamOverDiaplay.text = days.ToString();
             dayLeftDiaplay.text = dayLeft.ToString();
             int sellingPrice = seedPot.CalculateSellingPrice();
-            if (dayLeft < 0)
+            if (dayLeft < 1)
             {
                 sellingPrice -= rentAmout;
                 dayLeft = rentInterval;
